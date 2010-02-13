@@ -11,8 +11,9 @@ def parse(content):
         rows.append(row)
     return rows
 
+import os
 def lib_js():
-    fp = open('/tmp/hyperbmp/hyperbmp/lib.js')
+    fp = open(os.path.join(os.path.split(__file__)[0], 'lib.js'))
     data = fp.read()
     fp.close()
     return data
