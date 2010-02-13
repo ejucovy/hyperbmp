@@ -13,7 +13,7 @@ var table_to_csv = function() {
 		    if( href ) color = color + '>' + href;
 		    data = data + color + ',';
 		});
-	    data = data.replace(/,$/g, '\\n');
+	    data = data.replace(/,$/g, '\n');
 	});
     return data;
 };
