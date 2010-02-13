@@ -2,7 +2,7 @@ from svenweb.edit import BaseEditor
 from webob import Response
 
 from hyperbmp.props import RequestProperties
-from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors
+from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors, render_addform
 
 import mimetypes
 mimetypes.add_type('text/csv+hbmp', '.hbmp')
@@ -30,7 +30,7 @@ class HbmpEditor(BaseEditor):
         for j in range(height):
             content.append(','.join(["white" for i in range(width)]))
         content = '\n'.join(content)
-        return self.render(request, content)
+        return self.render(request, content, new=True)
 
     def match_edit(self, request, content, mimetype):
         if 'raw' in request.GET:
@@ -43,7 +43,7 @@ class HbmpEditor(BaseEditor):
     def hbmp_form(self, request, content, mimetype):
         return self.render(request, content)
 
-    def render(self, req, content):
+    def render(self, req, content, new=False):
         html = """
 <html>
 <head>
@@ -57,6 +57,9 @@ class HbmpEditor(BaseEditor):
 %s
 
 </script></head><body>""" % lib_js()
+
+        if new is True:
+            html += render_addform(req.GET.get('h'), req.GET.get('w'))
 
         html += draw(req, content, self.props)
         html += render_controls(some_colors)

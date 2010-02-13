@@ -78,5 +78,18 @@ def render_controls(colors):
 %s
 </div>""" % form
 
+def render_addform(h=None, w=None):
+    h = h or 10
+    w = w or 10
+
+    return """
+<form method="GET">
+<label for="h">Grid height</label>
+<input name="h" value="%s" />
+<label for="w">Grid width</label>
+<input name="w" value="%s" />
+<input type="submit" value="Go!" />
+</form>""" % (h, w)
+
 some_colors = ('red','blue','green','white',
                'black','orange','purple','yellow','lightgreen')
