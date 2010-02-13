@@ -14,6 +14,9 @@ class HbmpEditor(BaseEditor):
         return RequestProperties()
 
     def new(self, request):
+        if 'raw' in request.GET:
+            return BaseEditor.new(self, request)
+
         if request.GET.has_key('hbmp'):
             return self.hbmp_new(request)
 
