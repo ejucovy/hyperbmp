@@ -4,6 +4,9 @@ from webob import Response
 from hyperbmp.props import RequestProperties
 from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors
 
+import mimetypes
+mimetypes.add_type('text/csv+hbmp', '.hbmp')
+
 class HbmpEditor(BaseEditor):
 
     @property
@@ -13,6 +16,10 @@ class HbmpEditor(BaseEditor):
     def new(self, request):
         if request.GET.has_key('hbmp'):
             return self.hbmp_new(request)
+
+        if self.new_default_mimetype(request) == 'text/csv+hbmp':
+            return self.hbmp_new(request)
+
         return BaseEditor.new(self, request)
 
     def hbmp_new(self, request):
