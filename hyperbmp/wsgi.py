@@ -18,3 +18,11 @@ class Foo(object):
         if thingie.match_view(req, content, mimetype):
             return thingie.render(req, content)(environ, start_response)
         return res(environ, start_response)
+
+from svenweb.factory import factory as base_factory
+from hyperbmp.edit import HbmpEditor
+
+def app_factory(global_conf, **app_conf):
+    return base_factory(global_conf, 
+                        editor=HbmpEditor, viewer=HbmpView, 
+                        **app_conf)

@@ -22,5 +22,7 @@ setup(name='hyperbmp',
         "svenweb",
         ],
       entry_points="""
+[paste.app_factory]
+main = hyperbmp.wsgi:app_factory
       """,
       )

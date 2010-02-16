@@ -34,7 +34,7 @@ Run the software using a paste.deploy configuration for svenweb, but replace
 
 with
 
-  paste.app_factory = egg:hyperbmp
+  use = egg:hyperbmp
 
 to enable the hyperbmp extensions for svenweb.  To tell the system to treat files
 as hyperbitmaps, you can save files with the mimetype "text/csv+hbmp". A mimetype
