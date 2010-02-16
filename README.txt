@@ -20,3 +20,11 @@ The hyperbmp software will render .hbmp files into HTML for browser display.
 The software also provides a simple editing environment for .hbmp files using
 Javascript. It is built as a plugin to `Svenweb <http://pypi.python.org/pypi/svenweb>`_
 though a standalone version wouldn't be hard to build either.
+
+When rendering a hyperbitmap in the browser, you can configure the height and width
+of the grid elements using query string parameters `pw` and `ph`. For example,
+
+  /foo.hbmp?pw=10&ph=50
+
+will render foo.hbmp as a table where each TD has height=10 and width=10.
+
