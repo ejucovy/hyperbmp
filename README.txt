@@ -28,3 +28,16 @@ of the grid elements using query string parameters `pw` and `ph`. For example,
 
 will render foo.hbmp as a table where each TD has height=10 and width=10.
 
+Run the software using a paste.deploy configuration for svenweb, but replace
+
+  paste.app_factory = svenweb.factory:factory
+
+with
+
+  paste.app_factory = egg:hyperbmp
+
+to enable the hyperbmp extensions for svenweb.  To tell the system to treat files
+as hyperbitmaps, you can save files with the mimetype "text/csv+hbmp". A mimetype
+mapper is set up for the .hbmp extension, so if you visit an addform for a new file
+that ends in .hbmp, the hyperbmp editing environment will be loaded. You can disable
+it and drop into the plaintext editor by appending the querystring parameter ?raw.
