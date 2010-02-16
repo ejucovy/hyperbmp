@@ -26,3 +26,13 @@ def app_factory(global_conf, **app_conf):
     return base_factory(global_conf, 
                         editor=HbmpEditor, viewer=HbmpView, 
                         **app_conf)
+
+def single_file_app_factory(global_conf, file=None, **app_conf):
+    renderer = HbmpView()
+
+    def call(environ, start_response):
+        req = Request(environ)
+        content = open(file).read()
+        return renderer.render(req, content)(environ, start_response)
+
+    return call
