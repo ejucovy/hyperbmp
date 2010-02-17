@@ -6,7 +6,7 @@ var serialize = function() {
 var table_to_csv = function() {
     var data = '';
     $("table tr").each(function() {
-	    
+
 	    $(this).children("td").each(function() {
 		    var color = $(this).attr('class');
 		    var href = $(this).attr('href');
@@ -23,8 +23,11 @@ var paint_square = function() {
     if( color == 'link' ) {
         $(this).attr('href', $("input#hyperlink").attr('value'));
     } else {
-        $(this).css({backgroundColor: color});
-        $(this).attr('class', color);
+      if( color == 'custom' ) {
+        color = $("input#customcolor").attr('value');
+      }
+      $(this).css({backgroundColor: color});
+      $(this).attr('class', color);
     };
 };
 

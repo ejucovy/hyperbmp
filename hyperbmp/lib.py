@@ -68,8 +68,17 @@ def render_controls(colors):
   <input type='radio' name='brush' value='%s' />
 </span>""" % (value, value)
                       for value in colors])
+
+
+    form += """
+<p>
+<label for="customcolor">Write-in</label>
+<input type='radio' name='brush' value='custom' />
+<input type='text' id='customcolor' />"""
     
     form += """
+<p>
+<label for="hyperlink">Link</label>
 <input type='radio' name='brush' value='link' />
 <input type='text' id='hyperlink' />"""
 
