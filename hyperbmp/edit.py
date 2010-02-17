@@ -1,5 +1,6 @@
 from svenweb.edit import BaseEditor
 from webob import Response
+from webob import exc
 
 from hyperbmp.props import RequestProperties
 from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors, render_addform
@@ -7,11 +8,38 @@ from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors, rend
 import mimetypes
 mimetypes.add_type('text/csv+hbmp', '.hbmp')
 
+def uploader_form(request, *args):
+    form = """<html><body><form name="upload_form" method="post" enctype="multipart/form-data">
+<label for="file">Upload a file</label><input type="file" name="file"/>
+<br/>
+<label for="svenweb.commit_message">Change note</label>
+<input type="text" name="svenweb.commit_message" />
+<br/>
+<input type="submit" value="upload"/></form></body></html>"""
+
+    return Response(form)
+
+from mimetypes import guess_type
+from svenweb.lib import location
+def uploader_post(req):
+    loc = location(req)
+    fin = req.POST['file']
+    mimetype = guess_type(fin.filename)[0]
+    contents = fin.file.read()
+    message = req.POST.get('svenweb.commit_message')
+    return (contents, message, mimetype, 
+            exc.HTTPSeeOther(location=loc))
+
 class HbmpEditor(BaseEditor):
 
     @property
     def props(self):
         return RequestProperties()
+
+    def post(self, request):
+        if request.POST.has_key('file'):
+            return uploader_post(request)
+        return BaseEditor.post(self, request)
 
     def new(self, request):
         if 'raw' in request.GET:
@@ -19,6 +47,9 @@ class HbmpEditor(BaseEditor):
 
         if request.GET.has_key('hbmp'):
             return self.hbmp_new(request)
+
+        if request.GET.has_key('file'):
+            return uploader_form(request)
 
         if self.new_default_mimetype(request) == 'text/csv+hbmp':
             return self.hbmp_new(request)
@@ -38,6 +69,9 @@ class HbmpEditor(BaseEditor):
     def match_edit(self, request, content, mimetype):
         if 'raw' in request.GET:
             return BaseEditor.match_edit(self, request, content, mimetype)
+
+        if request.GET.has_key('file'):
+            return uploader_form
 
         if mimetype == 'text/csv+hbmp':
             return self.hbmp_form
