@@ -1,7 +1,7 @@
 
 class RequestProperties(object):
 
-    default = {'height': 16, 'width': 16, 
+    default = {'height': 10, 'width': 10, 
                'pixelheight': '50px', 'pixelwidth': '50px',}    
 
     def height(self, req):

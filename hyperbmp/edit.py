@@ -8,7 +8,7 @@ from hyperbmp.lib import parse, lib_js, draw, render_controls, some_colors, rend
 import mimetypes
 mimetypes.add_type('text/csv+hbmp', '.hbmp')
 
-def uploader_form(request, *args):
+def uploader_form():
     form = """<html><body><form name="upload_form" method="post" enctype="multipart/form-data">
 <label for="file">Upload a file</label><input type="file" name="file"/>
 <br/>
@@ -49,7 +49,7 @@ class HbmpEditor(BaseEditor):
             return self.hbmp_new(request)
 
         if request.GET.has_key('file'):
-            return uploader_form(request)
+            return uploader_form()
 
         if self.new_default_mimetype(request) == 'text/csv+hbmp':
             return self.hbmp_new(request)
@@ -66,19 +66,17 @@ class HbmpEditor(BaseEditor):
         content = '\n'.join(content)
         return self.render(request, content, new=True)
 
-    def match_edit(self, request, content, mimetype):
+    def editform(self, request, content, mimetype):
         if 'raw' in request.GET:
-            return BaseEditor.match_edit(self, request, content, mimetype)
+            return BaseEditor.editform(self, request, content, mimetype)
 
         if request.GET.has_key('file'):
-            return uploader_form
+            return uploader_form()
 
         if mimetype == 'text/csv+hbmp':
-            return self.hbmp_form
-        return BaseEditor.match_edit(self, request, content, mimetype)
+            return self.render(request, content)
 
-    def hbmp_form(self, request, content, mimetype):
-        return self.render(request, content)
+        return BaseEditor.match_edit(self, request, content, mimetype)
 
     def render(self, req, content, new=False):
         html = """
