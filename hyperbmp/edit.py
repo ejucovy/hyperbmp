@@ -76,7 +76,7 @@ class HbmpEditor(BaseEditor):
         if mimetype == 'text/csv+hbmp':
             return self.render(request, content)
 
-        return BaseEditor.match_edit(self, request, content, mimetype)
+        return BaseEditor.editform(self, request, content, mimetype)
 
     def render(self, req, content, new=False):
         html = """
