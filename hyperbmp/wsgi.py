@@ -15,8 +15,9 @@ class Foo(object):
         mimetype = res.content_type
 
         thingie = HbmpView()
-        if thingie.match_view(req, content, mimetype):
-            return thingie.render(req, content)(environ, start_response)
+        render = thingie.match_view(req, content, mimetype)
+        if render:
+            return render(req, content)(environ, start_response)
         return res(environ, start_response)
 
 from svenweb.factory import factory as base_factory
