@@ -40,9 +40,9 @@ class HbmpView(object):
         return Response(html)
 
 image_tmpl = """
-<img src="%s" style="position: absolute;
-                     top: %s; left: %s;
-                     z-index: %s;" />
+<img src="%s" 
+     style="position: absolute; %s"
+     />
 """
 
 def imageplot_render(req, content):
@@ -51,11 +51,8 @@ def imageplot_render(req, content):
         line = line.strip()
         if not line: continue
         data = line.split(',')
-        img_src, coords = data[0], data[1:]
-        z_index = "auto"
-        if len(coords) == 3:
-            z_index = coords[2]
-        image = image_tmpl % (img_src, coords[0], coords[1], z_index)
+        img_src, style = data[0], data[1:]
+        image = image_tmpl % (img_src, style)
         images.append(image)
     images = '\n'.join(images)
     html = "<html><body>\n%s\n</body></html>" % images
