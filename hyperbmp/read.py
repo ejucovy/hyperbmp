@@ -51,7 +51,7 @@ def imageplot_render(req, content):
         line = line.strip()
         if not line: continue
         data = line.split(',')
-        img_src, style = data[0], data[1:]
+        img_src, style = data[0], data[1]
         image = image_tmpl % (img_src, style)
         images.append(image)
     images = '\n'.join(images)
