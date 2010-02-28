@@ -48,6 +48,8 @@ image_tmpl = """
 def imageplot_render(req, content):
     images = []
     for line in content.splitlines():
+        line = line.strip()
+        if not line: continue
         data = line.split(',')
         img_src, coords = data[0], data[1:]
         z_index = "auto"
