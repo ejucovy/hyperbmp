@@ -20,9 +20,14 @@ setup(name='hyperbmp',
       zip_safe=False,
       install_requires=[
         "svenweb",
+        "webob",
         ],
+      extras_require={'microformat': ['lxml', 'pyquery']},
       entry_points="""
 [paste.app_factory]
 main = hyperbmp.wsgi:app_factory
+
+[paste.filter_factory]
+microformat = hyperbmp.microformat:filter_factory
       """,
       )
